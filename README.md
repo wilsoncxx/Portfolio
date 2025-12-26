@@ -37,5 +37,5 @@ Whether you're a recruiter, developer, or just curious — this portfolio is the
 Here are some of the core tools and libraries used in this project:
 
 - 📌 **HTML5 & CSS3** – Structure and styling
-- 🔧 **JavaScript** – Interactive features
-- ⚡ **Vite / React / (or whatever your stack is)** – App framework & build tool
+- 🔧 **JavaScript / TypeScript** – Interactive features
+- ⚡ **Vite / React** – App framework & build tool

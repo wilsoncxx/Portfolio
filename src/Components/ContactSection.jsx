@@ -65,7 +65,7 @@ export const ContactSection = () => {
 
     const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
     const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\n${message}`
+      `Name: ${name}\nEmail: ${email}\n\n${message}`,
     );
 
     window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
@@ -127,7 +127,10 @@ export const ContactSection = () => {
                 </div>
                 <div className="contact-copy">
                   <h3 className="contact-label">Email</h3>
-                  <a href={`mailto:${recipientEmail}`} className="contact-value">
+                  <a
+                    href={`mailto:${recipientEmail}`}
+                    className="contact-value"
+                  >
                     {recipientEmail}
                   </a>
                 </div>
@@ -186,7 +189,9 @@ export const ContactSection = () => {
                     <a
                       key={link.label}
                       href={link.href}
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      target={
+                        link.href.startsWith("http") ? "_blank" : undefined
+                      }
                       rel={
                         link.href.startsWith("http") ? "noreferrer" : undefined
                       }
@@ -224,7 +229,7 @@ export const ContactSection = () => {
                   required
                   autoComplete="name"
                   className="contact-input"
-                  placeholder="Wilson Cho"
+                  placeholder="Your Name Here..."
                 />
               </div>
 

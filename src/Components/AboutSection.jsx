@@ -1,15 +1,20 @@
 import { Briefcase, Code, Wrench } from "lucide-react";
-import { useScrollFade } from "@/lib/useScrollFade";
+import { useInView } from "@/lib/useInView";
 
 export const AboutSection = () => {
-  const { fadeIn, fadeOut } = useScrollFade();
+  const { ref, isInView } = useInView();
 
   return (
-    <section id="about" className="py-24 px-4 relative">
+    <section
+      id="about"
+      ref={ref}
+      data-visible={isInView ? "true" : "false"}
+      className="py-24 px-4 relative"
+    >
       <div className="container mx-auto max-w-5xl">
         <h2
-          style={{ opacity: fadeIn(270, 700) * fadeOut(870, 980) }}
-          className="text-3xl md:text-4xl font-bold mb-23 text-center"
+          style={{ "--reveal-delay": "0ms" }}
+          className="reveal-up text-3xl md:text-4xl font-bold mb-23 text-center"
         >
           About <span className="text-primary"> Me </span>
         </h2>
@@ -17,14 +22,14 @@ export const AboutSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h3
-              style={{ opacity: fadeIn(550, 750) * fadeOut(980, 1180) }}
-              className="text-2xl font-semibold"
+              style={{ "--reveal-delay": "120ms" }}
+              className="reveal-up text-2xl font-semibold"
             >
               Passionate Web Developer
             </h3>
             <p
-              style={{ opacity: fadeIn(550, 750) * fadeOut(980, 1180) }}
-              className="text-muted-foreground"
+              style={{ "--reveal-delay": "200ms" }}
+              className="reveal-up text-muted-foreground"
             >
               I'm a full-stack developer who graduated in 2024 and genuinely
               enjoys building things that actually works, looks good, and runs
@@ -32,8 +37,8 @@ export const AboutSection = () => {
               both the frontend polish and the backend logic along the way.
             </p>
             <p
-              style={{ opacity: fadeIn(550, 750) * fadeOut(980, 1180) }}
-              className="text-muted-foreground"
+              style={{ "--reveal-delay": "280ms" }}
+              className="reveal-up text-muted-foreground"
             >
               On the frontend, I craft clean and responsive interfaces using
               React and Tailwind CSS. On the backend, I work with C# and .NET
@@ -45,16 +50,16 @@ export const AboutSection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
               <a
-                style={{ opacity: fadeIn(650, 720) * fadeOut(1050, 1150) }}
+                style={{ "--reveal-delay": "360ms" }}
                 href="#contact"
-                className="cosmic-button"
+                className="reveal-up cosmic-button"
               >
                 Contact Me
               </a>
               <a
-                style={{ opacity: fadeIn(750, 820) * fadeOut(1200, 1350) }}
+                style={{ "--reveal-delay": "430ms" }}
                 href=""
-                className="px-6 py-2 rounded-full border border-primary text-primary font-semibold hover:bg-primary/30 transition-colors duration-300"
+                className="reveal-up px-6 py-2 rounded-full border border-primary text-primary font-semibold hover:bg-primary/30 transition-colors duration-300"
               >
                 Download CV
               </a>
@@ -63,8 +68,8 @@ export const AboutSection = () => {
 
           <div className="grid grid-cols-1 gap-6">
             <div
-              style={{ opacity: fadeIn(450, 570) * fadeOut(930, 1130) }}
-              className="gradient-border p-6 card-hover"
+              style={{ "--reveal-delay": "180ms" }}
+              className="reveal-up gradient-border motion-card p-6"
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-primary/20">
@@ -82,8 +87,8 @@ export const AboutSection = () => {
               </div>
             </div>
             <div
-              style={{ opacity: fadeIn(600, 720) * fadeOut(1080, 1280) }}
-              className="gradient-border p-6 card-hover"
+              style={{ "--reveal-delay": "290ms" }}
+              className="reveal-up gradient-border motion-card p-6"
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-primary/20">
@@ -100,8 +105,8 @@ export const AboutSection = () => {
               </div>
             </div>
             <div
-              style={{ opacity: fadeIn(750, 870) * fadeOut(1230, 1430) }}
-              className="gradient-border p-6 card-hover"
+              style={{ "--reveal-delay": "400ms" }}
+              className="reveal-up gradient-border motion-card p-6"
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-primary/20">

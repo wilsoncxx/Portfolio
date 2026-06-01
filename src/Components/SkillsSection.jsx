@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useScrollFade } from "@/lib/useScrollFade";
+import { useInView } from "@/lib/useInView";
 
 const skills = [
   // Languages
@@ -48,23 +48,46 @@ const categories = ["all", "languages", "frameworks", "concepts", "tools"];
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
-  const { fadeIn, fadeOut } = useScrollFade();
+  const { ref, isInView } = useInView();
 
-  const filteredSkills = skills.filter(
-    (skill) => activeCategory === "all" || skill.category === activeCategory
+  const filteredSkills = useMemo(
+    () =>
+      skills.filter(
+        (skill) => activeCategory === "all" || skill.category === activeCategory
+      ),
+    [activeCategory]
   );
+
   return (
-    <section id="skills" className="py-24 px-4 relative bg-secondary/30">
+    <section
+      id="skills"
+      ref={ref}
+      data-visible={isInView ? "true" : "false"}
+      className="py-24 px-4 relative overflow-hidden bg-secondary/30"
+    >
+      <div
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent"
+        aria-hidden="true"
+      />
+
       <div className="container mx-auto max-w-5xl">
         <h2
-          style={{ opacity: fadeIn(1000, 1380) * fadeOut(1650, 1780) }}
-          className="text-3xl md:text-4xl font-bold mb-12 text-center"
+          style={{ "--reveal-delay": "0ms" }}
+          className="reveal-up text-3xl md:text-4xl font-bold mb-4 text-center"
         >
           My <span className="text-primary"> Skills</span>
         </h2>
 
+        <p
+          style={{ "--reveal-delay": "90ms" }}
+          className="reveal-up text-center text-muted-foreground mb-12 max-w-2xl mx-auto"
+        >
+          Tools and concepts I use to build reliable, responsive, and polished
+          software.
+        </p>
+
         <div
-          style={{ opacity: fadeIn(1200, 1400) * fadeOut(1730, 1830) }}
+          style={{ "--reveal-delay": "170ms" }}
           className="flex flex-wrap justify-center gap-4 mb-12"
         >
           {categories.map((category, key) => (
@@ -72,10 +95,10 @@ export const SkillsSection = () => {
               key={key}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                "px-5 py-2 rounded-full transition-colors duration-300 capitalize",
+                "category-button",
                 activeCategory === category
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary/70 text-forefround hover:bd-secondary"
+                  ? "category-button-active"
+                  : "category-button-idle"
               )}
             >
               {category}
@@ -83,20 +106,26 @@ export const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          key={activeCategory}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {filteredSkills.map((skill, key) => (
             <div
-              key={key}
-              style={{ opacity: fadeIn(1280, 1480) }}
-              className="bg-card p-6 rounded-lg shadow-xs card-hover"
+              key={skill.name}
+              style={{ "--reveal-delay": `${240 + key * 55}ms` }}
+              className="reveal-up motion-card bg-card p-6 rounded-lg shadow-xs"
             >
               <div className="text-left mb-4">
-                <h3 className="font-semibold text-lg"> {skill.name}</h3>
+                <h3 className="font-semibold text-lg">{skill.name}</h3>
               </div>
-              <div className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
+              <div className="skill-meter" aria-hidden="true">
                 <div
-                  className="bg-primary h-2 rounded-full origin-left animate-[grow_1.5s_ease-out]"
-                  style={{ width: skill.level + "%" }}
+                  className="skill-meter-fill"
+                  style={{
+                    "--skill-level": `${skill.level}%`,
+                    "--reveal-delay": `${360 + key * 55}ms`,
+                  }}
                 />
               </div>
 

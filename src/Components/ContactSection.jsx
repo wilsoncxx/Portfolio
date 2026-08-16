@@ -9,9 +9,12 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import {
+  contactEmailHref,
+  contactFormEndpoint,
+  recipientEmail,
+} from "@/lib/contact";
 import { useInView } from "@/lib/useInView";
-
-const recipientEmail = "xuanxian2001@gmail.com";
 
 const phoneNumbers = [
   {
@@ -34,7 +37,7 @@ const socialLinks = [
   },
   {
     label: "Email",
-    href: `mailto:${recipientEmail}`,
+    href: contactEmailHref,
     icon: Mail,
   },
 ];
@@ -44,7 +47,7 @@ export const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -63,21 +66,41 @@ export const ContactSection = () => {
 
     setIsSubmitting(true);
 
-    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\n${message}`,
-    );
+    try {
+      const response = await fetch(contactFormEndpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _replyto: email,
+          _subject: `Portfolio inquiry from ${name}`,
+          _template: "table",
+        }),
+      });
 
-    window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+      if (!response.ok) {
+        throw new Error("Unable to send message");
+      }
 
-    window.setTimeout(() => {
       toast({
-        title: "Message ready",
-        description: "Your email app should open with the message prepared.",
+        title: "Message sent",
+        description: "Thanks for reaching out. I will get back to you soon.",
       });
       form.reset();
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Message not sent",
+        description: "Please try again or email me using the link beside the form.",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 650);
+    }
   };
 
   return (
@@ -128,7 +151,7 @@ export const ContactSection = () => {
                 <div className="contact-copy">
                   <h3 className="contact-label">Email</h3>
                   <a
-                    href={`mailto:${recipientEmail}`}
+                    href={contactEmailHref}
                     className="contact-value"
                   >
                     {recipientEmail}

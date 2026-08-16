@@ -1,17 +1,9 @@
 import { ArrowUp, Github, Mail } from "lucide-react";
+import { contactEmailHref } from "@/lib/contact";
 import { useInView } from "@/lib/useInView";
-
-const footerLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
 
 export const Footer = () => {
   const { ref, isInView } = useInView({ rootMargin: "0px 0px -4% 0px" });
-  const year = new Date().getFullYear();
 
   return (
     <footer
@@ -45,7 +37,7 @@ export const Footer = () => {
               <Github className="h-4 w-4" />
             </a>
             <a
-              href="mailto:xuanxian2001@gmail.com"
+              href={contactEmailHref}
               className="footer-icon-button"
               aria-label="Email Wilson"
             >

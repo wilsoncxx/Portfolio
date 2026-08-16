@@ -9,7 +9,7 @@ const skills = [
   { name: "HTML/CSS/JavaScript", level: 95, category: "languages" },
   //   { name: "HTML/CSS", level: 90, category: "languages" },
   { name: "C++", level: 70, category: "languages" },
-  { name: "SQL", level: 90, category: "languages" },
+  { name: "SQL", level: 95, category: "languages" },
   { name: "Python", level: 70, category: "languages" },
   //   { name: "Dart", level: 90, category: "languages" },
 
@@ -53,9 +53,10 @@ export const SkillsSection = () => {
   const filteredSkills = useMemo(
     () =>
       skills.filter(
-        (skill) => activeCategory === "all" || skill.category === activeCategory
+        (skill) =>
+          activeCategory === "all" || skill.category === activeCategory,
       ),
-    [activeCategory]
+    [activeCategory],
   );
 
   return (
@@ -98,7 +99,7 @@ export const SkillsSection = () => {
                 "category-button",
                 activeCategory === category
                   ? "category-button-active"
-                  : "category-button-idle"
+                  : "category-button-idle",
               )}
             >
               {category}
